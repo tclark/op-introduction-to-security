@@ -5,11 +5,11 @@
 \documentclass[10pt]{beamer}
 \usetheme{Dunedin}
 \usepackage{graphicx}
-\usepackage{fancyvrb}
-
+\usepackage{colortbl}
+	\usepackage{tabularx}
 \newcommand\codeHighlight[1]{\textcolor[rgb]{1,0,0}{\textbf{#1}}}
 
-\title{Managing Risk}
+\title{Measuring Risk}
 
 \author[IN618]{Security}
 \institute[Otago Polytechnic]{
@@ -28,10 +28,8 @@
 \begin{frame}
 	\frametitle{How secure can we be?}
 	
-	Last time we said that perfect security is not possible.
-        Given that, we need a way to talks about how secure we are
-        or can be.  
-
+	More to the point, how secure can we \emph{afford} to be?
+	
 \end{frame}
 
 \begin{frame}
@@ -73,17 +71,77 @@
 			tolerate our less than ideal decision making.
 		\item In a business setting we need to do better.
 		\item The name for this thing we need to measure is \emph{risk}.
-		\item Risk has a standard unit of measure.  It's dollars per year.
+		\item Once we know how much risk we are exposed to, we can make smart
+		decisions about how to reduce it.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
+	\frametitle{Measuring risk}
+	
+	Risk is a factor of two things:
+	\begin{itemize}
+		\item The probability that something bad will happen
+		\item The amount of harm that will result from it happening
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aside: CIA triad}
+	It's useful to identify the kinds of harm that can result from a security incident. 
+	The \emph{CIA triad} is a helpful mnemonic for this.
+	
+	\begin{itemize}
+		\item \textbf{C}onfidentiality
+		\item \textbf{I}ntegrity
+		\item \textbf{A}vailability
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Two types of analysis}
+	
+	\begin{itemize}
+		\item Qualitative: We ranks our risks relative to each other and decide which ones receive priority.
+		\item Quantitative: We assign a particular value, typically measured in dollars, to each element of risk.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Qualitative Analysis}
+	
+	The goal of \emph{qualitative risk analysis} is to prioritise risks into categories like high, medium, and low priority.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Qualitative Analysis}
+	
+	To do this we evaluate
+	
+	\begin{itemize}
+		\item The amount of harm caused by a possible event (high, medium, low)
+		\item The relative probability of an event (high, medium, low)
+	\end{itemize}
+\end{frame}
+	
+\begin{frame}
+	\frametitle{Qualitative Analysis}
+
+	\begin{tabularx}{\textwidth}{|X|X|X|X|}
+		\hline
+		\begin{tabular}{ll} Probability $\rightarrow$ \\ Harm $\downarrow$ \end{tabular} &  Low & Medium & High \\ \hline
+		Low & \cellcolor{green} & \cellcolor{green} & \cellcolor{yellow} \\ \hline
+		Medium & \cellcolor{green}  & \cellcolor{yellow} & \cellcolor{red} \\  \hline
+		High & \cellcolor{yellow} & \cellcolor{red} & \cellcolor{red} \\ \hline
+	\end{tabularx}
+\end{frame}
+\begin{frame}
 	\frametitle{Quantitative risk analysis}
 
 	\begin{itemize}
-		\item One way to assess risk is to perform \emph{quantitative risk analysis}.
-		\item Full risk analysis is the work of specialists, but we can
-			perform some basic analysis on our own.
+		\item Another way to assess risk is to perform \emph{quantitative risk analysis}.
+		\item This is more complicated than qualitative analysis, but it gives us a
+		      way to set a budget for security improvment.
 	\end{itemize}
 \end{frame}
 
@@ -137,7 +195,7 @@
 			a backup power system for \$6000.
 		\item The system is expected to last for 5 years.
 		\item Our annual cost is \$6000/5 = \$1200
-		\item We call this the \emph{annual cost of control}, or ACC
+		
 	\end{itemize}
 \end{frame}
 
@@ -146,9 +204,9 @@
 
 	\begin{itemize}
 		\item Now we can look at the cost/benefit.
-		\item (ALE without backup) - (ALE with backup) - (Cost of backup)
-		\item \$2000 - 0 - \$1200 = \$800
-                \item In other words, backup power reduces a \$2000 risk to 
+		\item ((ALE without backup) - (ALE with backup))  \\ - (Annual cost of backup)
+		\item  (\$2000 - 0) - \$1200 = \$800
+        \item In other words, backup power reduces a \$2000 risk to 
 			an \$800 risk. It's a good trade off.
 	\end{itemize}
 \end{frame}
@@ -168,10 +226,11 @@
 		\item Your research shows that the probability of 
 			this malware intrusion event is only 
 			0.0001 per week.
+		\item Therefore, the probability this will happen in a given year is $0.0001 * 52 = 0.0052$
 		\item This means that your risk exposure, or ALE is
 			(cost of intrusion event) * (probability per week) * (52 weeks)
 		\item ALE = \$25,000 * 0.0001 * 52 = \$130
-		\item In other words the risk is very low.
+		\item In other words the risk is very low, even though the cost and hence harm from an event is high.
 	\end{itemize}
 \end{frame}
 
@@ -182,6 +241,15 @@
 	backup/recovery systems.  So, the \$130 of risk exposure in this case
 	can be added to a larger risk exposure suite when determining the budget 
 	for malware protection and backup.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conclusions}
+	
+	Qualitative analysis is, at least initially, fairly easy and is probably a good place to start.
+	
+	\vspace{10mm}
+	Sometimes, especially when it comes to setting budgets, quantitative analysis provides more precise information and insight.
 \end{frame}
 
 \end{document}
