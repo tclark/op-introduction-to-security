@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage{graphicx}
+
+\usepackage[margin = 2.5cm]{geometry}
+
+
+
+
+\begin{document}
+
+\title{Lab 1.2: Risk Worksheet Solutions\\ IN618 Security}
+\date{}
+\maketitle
+
+
+
+\subsection*{Exercise one}
+Suppose that a qualitative analysis rates the following risks as below.
+
+\vspace{5mm}
+
+\begin{tabular}{l c c}
+	Security Event & Event Probability & Resulting Harm \\
+	Web Site Defacement & Medium & Low \\
+	XSS Attack & High & Medium \\
+	Buffer Overflow on Web Server & Low & High \\
+
+\end{tabular}
+
+Rate these risks from highest to lowest priority.
+
+\emph{
+\begin{enumerate}
+	\item XSS Attack
+	\item Buffer Overflow 
+	\item Defacement
+\end{enumerate}
+}
+
+
+
+
+\subsection*{Exercise two}
+A web site generates \$25,000 per hour in revenue. The probability of a web site outage in any given year is 10\% and such an outage would last 2 hours and cost \$1200 to correct. What is the Annual Loss Expectancy (ALE)?
+
+\emph{Cost of outage:} $ (\$25,000 * 2 $ hours$) + \$1200 = \$51,200$
+
+\emph{Probability of outage in a given year:} $0.1$
+
+$ALE = cost * probability = \$51,200 * 0.1 = \$5,120$
+
+\emph{Note: Some of our discussion around this in class was a bit muddled, so slightly different answers were accepted.}
+
+\newpage
+
+\subsection*{Exercise Three}
+A small consulting firm works on one project at a time and stores project data on a single server. The value of this data is \$100,000 and a server failure would jeopardise up to 90\% of it. The probability of such a failure in any year is 0.20.  What is the ALE?
+
+$ALE = cost * probability = (0.9 * \$100,000) * 0.2 = \$18,000 $
+\vspace{75mm}
+
+\subsection*{Exercise Four}
+You have a \$3 million data centre located in an area at risk of flooding. A major flood that would destroy the data centre occurs once every hundred years. Compute the ALE.
+
+$ALE = cost * probability = \$3,000,000 * 0.01 = \$30,000$
+
+\vspace{60mm}
+
+Based on this ALE, would you recommend that the company spend \$35,000 per year to control this threat?
+
+\emph{No. The cost to control the threat exceeds the cost of the threat.}
+
+
+
+
+
+
+
+\end{document}
