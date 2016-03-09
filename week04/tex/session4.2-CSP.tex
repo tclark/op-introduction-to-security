@@ -1,0 +1,182 @@
+% Beamer slide template prepared by Tom Clark <tom.clark@op.ac.nz>
+% Otago Polytechnic
+% Dec 2012
+
+\documentclass[10pt]{beamer}
+\usetheme{Dunedin}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+
+\newcommand\codeHighlight[1]{\textcolor[rgb]{1,0,0}{\textbf{#1}}}
+
+\title{Content Security Policy}
+
+\author[IN618]{Security}
+\institute[Otago Polytechnic]{
+  Otago Polytechnic \\
+  Dunedin, New Zealand \\
+}
+\date{}
+\begin{document}
+
+%----------- titlepage ----------------------------------------------%
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{The problem}
+	
+	Why might we be vulnerable to Cross Site Scripting?
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{The problem}
+	
+	Basically, we want to be able to supply resources like JavaScript 
+	to our pages without allowing anyone else to do so.
+	
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Content Security Policy}
+
+	\emph{Content Security Policy} (CSP) is a candidate standard that allows us to 
+	specify the legitimate sources for scripts, styles, media and other resources that
+	can be loaded into a web page. Resources from other locations are blocked.
+	 
+\end{frame}
+\begin{frame}[fragile]
+	\frametitle{Example}
+
+	\begin{verbatim}
+   Content-Security-Policy:    default-src 'self'; 
+                               style-src 'self' http://cdn.example.com; 
+                               script-src http://cdn.example.com;
+	\end{verbatim}
+	
+	We specify the policy in our HTTP headers that we send with our web pages.
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{How do we do this?}
+	
+	We can configure our web servers to send the headers automatically with every response, or
+	we can specify the headers in our web application code.
+	
+	In PHP:
+	\begin{verbatim}
+	header("Content-Security-Policy: default-src 'self'; 
+	        script-src http://cdn.example.com;")
+	\end{verbatim}
+	
+	Note that we must specify headers before we send any other output to the client.
+	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{CSP directives}
+
+\begin{verbatim}
+default-src
+script-src
+object-src
+style-src
+img-src
+media-src
+frame-src
+font-src
+connect-src
+\end{verbatim}
+
+
+
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{CSP Logging}
+
+With CSP we can specify a url to which CSP violations will be logged. 
+
+\begin{verbatim}
+  Content-Security-Policy:    default-src 'self'; 
+      report-uri: https://foo.org.nz/csp-report;
+\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{CSP Report-Onle}
+	
+	With CSP we can specify a url to which CSP violations will be logged. 
+	
+	\begin{verbatim}
+	Content-Security-Policy-Report-Only:    default-src 'self'; 
+	    report-uri: https://foo.org.nz/csp-report;
+	\end{verbatim}
+	
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Downsides}
+	
+	To use CSP to its fullest potential, you have to build your website
+	so that it complies with the policies.
+	
+	\begin{itemize}
+		\item No inline JavaScript
+		\item No inline styles
+		\item Any remote script sources (e.g. Google APIs) have to be identified
+		\item etc.
+	\end{itemize}
+		
+	This isn't a problem for new web sites, but legacy sites are likely to have problems.
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Downsides}
+	
+	
+	Internet Explorer
+	
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Downsides}
+	
+	
+	Older Browsers
+	
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Conclusion}
+	
+	
+	CSP is a useful tool for reducing XSS risk, but it doesn't completely solve the problem, especially for older sites and older browsers.
+	
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Demo}
+	
+	
+    \url{http://xss.foo.org.nz/lab4.2}
+    
+    \vspace{10mm}
+    Be sure to try this on a variety of browsers.
+	
+	
+\end{frame}
+\end{document}
+
