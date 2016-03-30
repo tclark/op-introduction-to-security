@@ -1,0 +1,163 @@
+% Beamer slide template prepared by Tom Clark <tom.clark@op.ac.nz>
+% Otago Polytechnic
+% Dec 2012
+
+\documentclass[10pt]{beamer}
+\usetheme{Dunedin}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+
+\newcommand\codeHighlight[1]{\textcolor[rgb]{1,0,0}{\textbf{#1}}}
+
+\title{Mitigating SQL Injection Vulnerability with Prepared Statements}
+
+\author[IN618]{Security}
+\institute[Otago Polytechnic]{
+  Otago Polytechnic \\
+  Dunedin, New Zealand \\
+}
+\date{}
+\begin{document}
+
+%----------- titlepage ----------------------------------------------%
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+	\frametitle{Do you want sql injection?}
+	\begin{verbatim}
+    $id = $_GET['id'];
+    $query = "SELECT * FROM users WHERE id=$id";
+    $db->query($query);
+	\end{verbatim}
+	
+	Because that's how you get SQL injection!
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Step 1}
+	\begin{Verbatim}[commandchars=\\\{\}]
+	\codeHighlight{$id = $_GET['id'];}
+	
+	\end{Verbatim}
+	
+	Take untrusted input,\ldots
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Step 2}
+	\begin{Verbatim}[commandchars=\\\{\}]
+	$id = $_GET['id'];
+	\codeHighlight{$query = "SELECT * FROM users WHERE id=$id";}
+	
+	\end{Verbatim}
+	
+	\ldots construct an SQL query string with the input,\ldots
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Step 3}
+	\begin{Verbatim}[commandchars=\\\{\}]
+	$id = $_GET['id'];
+	$query = "SELECT * FROM users WHERE id=$id";
+	\codeHighlight{$db->query($query);}
+	
+	\end{Verbatim}
+	
+	\ldots send the query string to the database. Now you're on your way to executing somebody else's code on your server
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Mitigating the risk}
+	
+	First, we should \textbf{never} just accept untrustworthy input.
+	
+	\begin{verbatim}
+	$id = $_GET['id'];
+	\end{verbatim}
+	
+	becomes
+	
+	\begin{verbatim}
+	if(is_numeric($_GET['id'])) {
+	    $id =(int) $_GET['id'];
+	}
+	\end{verbatim}
+	
+	since id's are meant to be integers in our application.
+	
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Mitigating the risk}
+	
+	Next, instead of constructing a query string, we create a \emph{prepared statement}.
+	
+	\begin{verbatim}
+	$query = "SELECT * FROM users WHERE id=$id";
+	\end{verbatim}
+	
+	becomes
+	
+	\begin{verbatim}
+$stmt = $db->prepare("SELECT * FROM users WHERE id=?")
+	\end{verbatim}
+	
+	
+	
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Mitigating the risk}
+	
+	Finally, we bind the variables in our prepared statement and execute it.
+	
+	\begin{verbatim}
+	$db->query($query);
+	\end{verbatim}
+	
+	becomes
+	
+	\begin{verbatim}
+	$stmt->bind_param("i", $id);
+	$stmt->execute();
+	\end{verbatim}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{One more thing \ldots}
+	
+	We can create database user accounts with varying levels of privileges. Set up and use accounts with the least amount of privileges needed.
+	\vspace{5mm}
+	
+	For example, if your application only needs to read from the database, connect as a user that only has read privileges.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Today's Lab}
+	
+	\begin{enumerate}
+		\item Download code for this lab from \\
+		\url{http://sec-student.foo.org.nz/~tclark/lab7.1.tgz}
+		\item The file \texttt{login.php} has already be modified to use
+		prepared SQL statements. Use it as an example.
+		\item Modify \texttt{reset.php} to use prepared SQL statements.
+		\item Additional information is available at \\ 
+		\url{http://php.net/manual/en/mysqli.quickstart.prepared-statements.php}
+	\end{enumerate}
+	
+	As always, we use PHP here as an example, but similar techniques apply to other languages.
+		
+	
+	\end{frame}
+	
+
+\end{document}
+
