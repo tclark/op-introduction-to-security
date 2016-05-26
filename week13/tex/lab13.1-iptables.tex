@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage[parfill]{parskip}
+\usepackage[margin = 2.5cm]{geometry}
+
+\usepackage[T1]{fontenc}
+
+
+\begin{document}
+
+\title{ Lab 13.1 Firewalling with iptables\\ IN618 Security}
+\date{\today}
+\maketitle
+
+\section*{Introduction}
+A fundamental task in securing a networked host is the configure and run a firewall.  In this lab we will see how to configure \texttt{iptables} to provide firewalling on  Linux server.
+
+\section*{Procedure}
+
+\begin{enumerate}
+	\item Obtain the ip address of a lab virtual machine from the lecturer.  Ssh into it with our standard username/password.
+	\item Install apache2 and nmap with the commands \\
+	\begin{verbatim}
+	sudo apt-get update
+	sudo apt-get install apache2 nmap
+	\end{verbatim}
+	You may need to modify your \texttt{sources.list} file if it asks for an install CD.
+	\item Visit the web page on your server using your desktop's browser.
+	\item Perform an \texttt{nmap} scan of your own machine and note the results.  You should find ports 80 and 22 open and all others closed.
+	\item Configure your \texttt{iptables} firewall following the tutorial at \url{https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-iptables-on-ubuntu-14-04}
+	\item Verify that you can access your VM using ssh and http.
+	\item Perform another nmap scan.  What, if anything, has changed?
+	\item Now modify your firewall to block http traffic and verify that it worked.
+	\item Perform another nmap scan and note the results.
+	
+\end{enumerate}
+
+
+
+\end{document}
