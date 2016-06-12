@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage[parfill]{parskip}
+\usepackage[margin = 2.5cm]{geometry}
+
+\usepackage[T1]{fontenc}
+
+
+\begin{document}
+
+\title{Exam Review Outline\\ IN618 Security}
+\date{}
+\maketitle
+
+The final exam for 2016 will be held on Thursday, June 16. There will be one session at 1:00 PM and a second at 3:00 PM, both in D313. You should revise the following topics to prepare for the exam.
+
+\textbf{Risk}
+
+\begin{itemize}
+	\item Know the definition of risk. (Basically, Probability of harmful event * degree of harm from event)
+	\item Be able to calculate an ALE.
+	\item Understand how an ALE informs budget calculations for risk reduction measures.
+	\item Know the difference between quantitative and qualitative risk assessment.
+	\item Be able to use qualitative risk assessments to prioritise security decisions.
+\end{itemize}
+
+\textbf{Password hashing}
+
+\begin{itemize}
+	\item Explain the algorithm for authenticating a user with hashed passwords.
+	\item Understand the difference between hashing and two-way encryption methods. Why is hashing a good method for protecting passwords?
+	\item Explain how using salt with hashed passwords improves their security.
+\end{itemize}
+
+\textbf{Common vulnerabilities: XSS, XSRF, SQL injection}
+
+For each or these vulnerabilities:
+
+\begin{itemize}
+	\item Explain how the vulnerability can typically be exploited.
+	\item Explain the nature of the mistakes in coding that lead to the vulnerability and how to fix them.
+	\item Explain the risk associated with the vulnerability - what harm can result from its exploitation and how likelihood that it may be exploited. 
+\end{itemize}
+
+
+\textbf{Buffer overflows}
+
+\begin{itemize}
+	\item Explain why buffer overflow vulnerabilities are so serious.
+	\item Explain how buffer overflow attacks work.
+	\item Know what coding mistakes lead to buffer overflow vulnerabilities.
+\end{itemize}
+
+\textbf{Encryption}
+
+\begin{itemize}
+	\item Know the difference between symmetric key and asymmetric key encryption.
+	\item Explain the challenge of public key distribution and verification.
+	\item Know the difference between a self-signed key and one signed by a certififate authority(CA) key when setting up https. 
+	\item Know the security advantages of using public key authentication with ssh.
+\end{itemize}
+
+\newpage
+
+\textbf{Port scanning}
+
+\begin{itemize}
+	\item Explain how common port scanning methods work.
+	\item Interpret sample port scan results (produced by nmap).
+	\item List some uses for port scanning besides reconnoitring for an attack. 
+\end{itemize}
+
+\textbf{Firewalls}
+
+\begin{itemize}
+	\item Know what items of information can be used in packet filtering firewall rules.
+	\item Interpret the meaning of example firewall rules (using \texttt{iptables})
+	\item Explain the function of application firewalls and how they differ from packet filtering firewalls.
+\end{itemize}
+
+\end{document}
